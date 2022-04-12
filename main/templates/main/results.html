@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ question.question_text }}</h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<h4>Totol votes: {{question.totol_votes}}</h4>
+<ul>
+    {% for choice in question.choices.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.voters.count }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'main:detail' question.id %}">Vote again?</a>
+
+{% endblock content %}
+

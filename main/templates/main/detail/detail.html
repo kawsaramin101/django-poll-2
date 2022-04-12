@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="detail" class="">
+
+    <form hx-post="{% url 'main:vote' question.id %}" hx-trigger="submit" hx-target="#detail" hx-swap="outerHTML">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ question.question_text }}</h1></legend>
+            {% if error_message %}<p>
+                <strong>{{ error_message }}</strong>
+            </p>
+            {% endif %}
+            {{ selected_choice }}
+            {% for choice in question.choices.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" {% if selected_choice and selected_choice == choice.id %}checked{% endif %}>
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        </fieldset>
+        <button type="submit">Submit</button>
+    </form>
+
+</div>
+
+{% endblock content %}
+

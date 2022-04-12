@@ -1,0 +1,64 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bulma Css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+    <title>{% block title %} {% endblock %}</title>
+
+    {% block head %}
+
+    {% endblock head %}
+
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+    <div id="main">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+
+    <!-- Alpine js -->
+    <script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script>
+    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!-- Sweet Alert 2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getCookie('csrftoken');
+    </script>
+
+    {% block javascript %}
+
+    {% endblock javascript %}
+
+</body>
+</html>

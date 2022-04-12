@@ -1,0 +1,11 @@
+{% if errorr %}
+    <ul class="has-text-danger">
+    {% for error in errors %}
+        <li>
+            {{ error.subject }}
+            {{ error.subject.errors }}
+            {{ error.subject.label_tag }}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}

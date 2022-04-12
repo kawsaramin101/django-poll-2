@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="box my-5 mx-4">
+    <b>Welcome, {{ user.username }}</b>
+    <a class="button is-small is-danger is-light is-pulled-right" href="{% url 'users:logout' %}">Logout</a>
+    <br />
+    <br />
+    <div class="has-text-centered">
+        <a class="button is-primary is-light" href="{% url 'users:create_poll' %}">Create new poll</a>
+    </div>
+    <br />
+
+    {% if user_polls %}
+    <h4><b>Your polls</b></h4>
+    <div class="content">
+        <table>
+            <thead>
+                <tr><th>Poll</th><th>Votes</th><th></th></tr>
+            </thead>
+            <tbody>
+                {% for question in user_polls %}
+                <tr>
+                    <td><a class="has-text-link" href="{% url 'main:detail' question.id %}">{{ question.question_text }}</a></td>
+                    <td>{{question.voters.count}}</td>
+                    <td>
+                        {% if question.voters.count == 0 %}
+                        <a href="{% url 'edit_question' question.pk }">Edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </ul>
+        {% else %}
+        <h4><b>You have not created any poll yet.</b></h4>
+        {% endif %}
+
+    </div>
+</div>
+{% else %}
+<a href="{% url 'users:login' %}">Login</a>||<a href="{% url 'users:signup' %}">Sign up</a>
+{% endif %}
+
+{% endblock content %}

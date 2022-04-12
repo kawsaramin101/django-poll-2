@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    .main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        /*background-color: #f5f5f5;*/
+    }
+</style>
+{% endblock head %}
+
+
+{% block content %}
+<div class="main">
+
+    <div class="box my-5 mx-4" style="width:100%">
+        <h1 class="h4 mb-3 fw-normal text-center">Please sign in</h1>
+        
+        <form 
+          hx-post="{% url 'users:signup' %}" 
+          hx-target="#form-errors" 
+          hx-swap="innerHTML">
+            {% csrf_token %}
+            <div class="field mt-2">
+                <label class="label" for="username">Username</label>
+                <div class="control">
+                    <input class="input" type="text" id="username" placeholder="Username" name="username" autocomplete="nope"
+                        hx-post="{% url 'users:check-username' %}" 
+                        hx-trigger="keyup changed" 
+                        hx-target="#username_error" 
+                        hx-swap="innerHTML" />
+                </div>
+            </div>
+            <span id="username_error" class="small text-danger text-wrap"></span>
+            <div class="field mt-2">
+                <label class="label" for="email">Email</label>
+                <div class="control">
+                    <input class="input" name="email" type="email" id="email" placeholder="Email">
+                </div>
+            </div>
+
+            <div class="field mt-2">
+                <label class="label" for="password1">Password</label>
+                <div class="control">
+                    <input class="input" name="password1" type="password" class="form-control" id="password1" placeholder="Password">
+                </div>
+            </div>
+            <div class="field mt-2">
+                <label class="label" for="password2">Confirm Password</label>
+                <div class="control">
+                    <input class="input" name="password2" type="password" class="form-control" id="password2" placeholder="Password Confirmation">
+                </div>
+            </div>
+            
+            <div id="form-errors"></div>
+          
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary shadow-none" type="submit">Sign up</button>
+            </div>
+            <p class="has-text-centered">
+                Already have an account?
+                <a class="has-text-link" href="{% url 'users:login' %}">Login</a>
+            </p>
+           
+        </form>
+    </div>
+</div>
+{% endblock content %}
